@@ -6,7 +6,7 @@ if [ "$RUN_SCRIPT" -eq 0 ]; then
 fi
 
 ###CHECK###
-LATEST="Mar 11 13:10:24 KST 2025"
+LATEST="Mar 11 13:00:58 KST 2025"
 MD5_HASH="522d9f8d06eae4c85a392962df82a41a"
 
 ###OPTION###
