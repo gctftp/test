@@ -126,11 +126,11 @@ check_fw_version()
 	debug_log "LATEST_TIMESTAMP :" $LATEST_TIMESTAMP
 	debug_log "CURRENT_TIMESTAMP :" $CURRENT_TIMESTAMP
 
-	if [ "$CURRENT_TIMESTAMP" -gt "$LATEST_TIMESTAMP" ]; then
-		echo "Latest Version"
-		return 1
-	else
+	if [ "$LATEST_TIMESTAMP" -gt "$CURRENT_TIMESTAMP" ]; then
 		return 0
+	else
+		echo "Latest Version"
+		return 1	
 	fi
 }
 
