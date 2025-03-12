@@ -7,7 +7,7 @@ fi
 
 ###CHECK###
 LATEST="Mar 11 13:00:58 KST 2025"
-MD5_HASH="622d9f8d06eae4c85a392962df82a41a"
+MD5_HASH="522d9f8d06eae4c85a392962df82a41a"
 
 ###OPTION###
 DEBUG=1
@@ -126,12 +126,20 @@ check_fw_version()
 	debug_log "LATEST_TIMESTAMP :" $LATEST_TIMESTAMP
 	debug_log "CURRENT_TIMESTAMP :" $CURRENT_TIMESTAMP
 
+	if [ -z "$CURRENT_TIMESTAMP" ]; then
+		echo "Failed to get the date."
+		return 1
+	fi
+
 	if [ "$LATEST_TIMESTAMP" -gt "$CURRENT_TIMESTAMP" ]; then
 		return 0
 	else
 		echo "Latest Version"
-		return 1	
+		return 1
 	fi
+
+	CONFIG=$(sed -n 's/.*- \(GDM[0-9]\{4\}[A-Za-z]\).*/\1/p' "$LOG_FILE" | tail -n 1)
+	debug_log "CONFIG :" $CONFIG
 }
 
 ###FW UPDATE###
@@ -149,7 +157,7 @@ if [ "$FW_UPDATE" -eq 1 ]; then
 
 	echo "Start FW Download ..." 
 
-	ftpget -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_ADDRESS" "$LOCAL_FW" "$REMOTE_FW"
+	ftpget -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_ADDRESS" "$LOCAL_FW" "$CONFIG/$REMOTE_FW"
 	if [ $? -ne 0 ]; then
 		echo "ftpget failed"
 		exit 1
