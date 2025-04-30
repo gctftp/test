@@ -132,14 +132,15 @@ check_fw_version()
 	fi
 
 	if [ "$LATEST_TIMESTAMP" -gt "$CURRENT_TIMESTAMP" ]; then
+ 		CONFIG=$(sed -n 's/.*- \(GDM[0-9]\{4\}[A-Za-z]\).*/\1/p' "$LOG_FILE" | tail -n 1)
+		debug_log "CONFIG :" $CONFIG
 		return 0
 	else
 		echo "Latest Version"
 		return 1
 	fi
 
-	CONFIG=$(sed -n 's/.*- \(GDM[0-9]\{4\}[A-Za-z]\).*/\1/p' "$LOG_FILE" | tail -n 1)
-	debug_log "CONFIG :" $CONFIG
+
 }
 
 ###FW UPDATE###
